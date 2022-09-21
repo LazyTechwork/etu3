@@ -25,6 +25,7 @@ build:
 test:
   stage: test
   script: gradle test jacocoTestReport
+  needs: [ "build" ]
   cache:
     key: "$CI_COMMIT_REF_NAME"
     policy: pull
@@ -32,8 +33,11 @@ test:
       - build
       - .gradle
   artifacts:
+    when: always
     paths:
       - build/reports/jacoco/report.xml
+    reports:
+      junit: build/test-results/test/**/TEST-*.xml
 
 coverage:
   stage: visualize
