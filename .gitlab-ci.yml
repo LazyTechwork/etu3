@@ -3,6 +3,7 @@ image: gradle:alpine
 stages:
   - build
   - test
+  - visualize
 
 variables:
   GRADLE_OPTS: "-Dorg.gradle.daemon=false"
@@ -23,10 +24,26 @@ build:
 
 test:
   stage: test
-  script: gradle test
+  script: gradle test jacocoTestReport
   cache:
     key: "$CI_COMMIT_REF_NAME"
     policy: pull
     paths:
       - build
       - .gradle
+  artifacts:
+    paths:
+      - build/reports/jacoco/report.xml
+
+coverage:
+  stage: visualize
+  image: registry.gitlab.com/haynes/jacoco2cobertura:1.0.7
+  script:
+    # convert report from jacoco to cobertura, using relative project path
+    - python /opt/cover2cover.py build/reports/jacoco/report.xml $CI_PROJECT_DIR/src/main/java/ > build/reports/cobertura.xml
+  needs: [ "test" ]
+  artifacts:
+    reports:
+      coverage_report:
+        coverage_format: cobertura
+        path: build/reports/cobertura.xml
