@@ -24,7 +24,8 @@ build:
 
 test:
   stage: test
-  script: gradle test jacocoTestReport
+  script: gradle test jacocoTestReport jacocoLogTestCoverage
+  coverage: '/\s*-\s*Instruction Coverage:\s*([0-9.]+)%/'
   needs: [ "build" ]
   cache:
     key: "$CI_COMMIT_REF_NAME"
@@ -43,7 +44,6 @@ coverage:
   stage: visualize
   image: registry.gitlab.com/haynes/jacoco2cobertura:1.0.7
   script:
-    # convert report from jacoco to cobertura, using relative project path
     - python /opt/cover2cover.py build/reports/jacoco/report.xml $CI_PROJECT_DIR/src/main/java/ > build/reports/cobertura.xml
   needs: [ "test" ]
   artifacts:
