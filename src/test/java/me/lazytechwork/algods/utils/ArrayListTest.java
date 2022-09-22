@@ -1,16 +1,23 @@
 package me.lazytechwork.algods.utils;
 
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class LinkedListTest {
-    private final LinkedList<Integer> list = new LinkedList<>();
+public class ArrayListTest {
+    private ArrayList<Integer> list;
+
+    @BeforeEach
+    void setUp() {
+        list = new ArrayList<>();
+    }
 
     @AfterEach
     void tearDown() {
-        list.clear();
+        list = null;
+        System.gc();
     }
 
     @Test
@@ -32,6 +39,12 @@ public class LinkedListTest {
 
         assertEquals(5, list.size());
         assertEquals(4, list.get(3));
+
+        assertThrows(
+                IndexOutOfBoundsException.class,
+                () -> list.remove(-1),
+                "Excepted IndexOutOfBounds, but it didn't"
+        );
     }
 
     @Test
@@ -108,21 +121,24 @@ public class LinkedListTest {
     }
 
     @Test
-    void recalculateSize() {
-        for (int i = 0; i <= 25; i++)
-            list.add(i);
-
-        assertEquals(26, list.size());
-        assertEquals(26, list.recalculateSize());
-    }
-
-    @Test
     void setItem() {
         for (int i = 0; i <= 25; i++)
             list.add(i);
 
         assertEquals(16, list.set(16, 77));
         assertEquals(77, list.get(16));
-        assertEquals(26, list.recalculateSize());
+        assertEquals(26, list.size());
+
+        assertThrows(
+                IndexOutOfBoundsException.class,
+                () -> list.set(-1, 1),
+                "Excepted IndexOutOfBounds, but it didn't"
+        );
+    }
+
+    @Test
+    void capacityIsDefaultAfterClearing() {
+        list.clear();
+        assertEquals(ArrayList.DEFAULT_CAPACITY, list.capacity());
     }
 }

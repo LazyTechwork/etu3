@@ -141,11 +141,6 @@ public class LinkedList<T> implements List<T> {
         this.size = 0;
     }
 
-    @Override
-    public void sort() {
-
-    }
-
     public int recalculateSize() {
         Node<T> current = this.first;
         int result = current == null ? 0 : 1;

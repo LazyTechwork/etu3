@@ -23,7 +23,7 @@ public interface List<T> {
      * @param filter filter to find element ( a -> a.equals(2) )
      * @return is element removed
      */
-    boolean remove(Filter element);
+    boolean remove(Filter filter);
 
     /**
      * Remove element by it's index
@@ -70,9 +70,4 @@ public interface List<T> {
      * Clears the list
      */
     void clear();
-
-    /**
-     * Sorts the list on place
-     */
-    void sort();
 }
