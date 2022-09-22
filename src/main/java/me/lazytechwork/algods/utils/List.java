@@ -2,72 +2,83 @@ package me.lazytechwork.algods.utils;
 
 public interface List<T> {
     /**
-     * @return size of a list
+     * Returns the number of elements in this list
+     *
+     * @return the number of elements in this list
      */
     int size();
 
     /**
-     * @return is this list empty
+     * Returns true if this list contains no elements
+     *
+     * @return true if this list contains no elements
      */
     boolean isEmpty();
 
     /**
-     * Adds element to the end or beginning of the list implementation
+     * Appends the specified element to the end of this list
      *
-     * @param element element to add
-     * @return is element added
+     * @param element element to be appended to this list
+     * @return true
      */
     boolean add(T element);
 
     /**
-     * @param filter filter to find element ( a -> a.equals(2) )
-     * @return is element removed
+     * Removes the first occurrence of the specified element filter from this list, if it is present.
+     * Shifts any subsequent elements to the left (subtracts one from their indices).
+     *
+     * @param filter element filter to be removed from this list, if present ( it -> it.equals(2) )
+     * @return true if this list contained the specified element
      */
     boolean remove(Filter filter);
 
     /**
-     * Remove element by it's index
+     * Removes the element at the specified position in this list.
+     * Shifts any subsequent elements to the left (subtracts one from their indices).
      *
-     * @param index index of an element in the list
+     * @param index index of the element to remove
      * @return true
+     * @throws IndexOutOfBoundsException if the index is out of range (index < 0 || index >= size())
      */
     boolean remove(int index);
 
     /**
-     * Get the element of the list by its index
+     * Returns the element at the specified position in this list
      *
-     * @param index index of element
-     * @return element stands on index
+     * @param index index of the element to return
+     * @return the element at the specified position in this list
+     * @throws IndexOutOfBoundsException if the index is out of range (index < 0 || index >= size())
      */
     T get(int index);
 
     /**
-     * Set an element on the position
+     * Replaces the element at the specified position in this list with the specified element
      *
-     * @param index   index of an element
-     * @param element element to add
-     * @return previous element
+     * @param index   index of the element to replace
+     * @param element element to be stored at the specified position
+     * @return the element previously at the specified position
+     * @throws IndexOutOfBoundsException if the index is out of range (index < 0 || index >= size())
      */
     T set(int index, T element);
 
     /**
-     * Check is the list contains at least one equals element
+     * Returns true if this list contains the specified element
      *
-     * @param filter filter to find element ( a -> a.equals(2) )
+     * @param filter filter to find element ( it -> it.equals(2) )
      * @return is the list contains at least one equals element
      */
     boolean contains(Filter filter);
 
     /**
-     * Get index of the first concurrency of the object in the list
+     * Returns the index of the first occurrence of the specified element in this list, or -1 if this list does not contain the element
      *
-     * @param filter filter to find element ( a -> a.equals(2) )
-     * @return index of element
+     * @param filter filter to find element ( it -> it.equals(2) )
+     * @return the index of the first occurrence of the specified element in this list, or -1 if this list does not contain the element
      */
     int indexOf(Filter filter);
 
     /**
-     * Clears the list
+     * Removes all the elements from this list
      */
     void clear();
 }
