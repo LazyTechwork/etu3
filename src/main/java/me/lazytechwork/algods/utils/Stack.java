@@ -51,7 +51,7 @@ public class Stack<T> {
 
     private static class Node<T> {
         private Node<T> previous;
-        private T data;
+        private final T data;
 
         public Node(T data) {
             this.data = data;

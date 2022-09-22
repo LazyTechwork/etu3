@@ -1,13 +1,13 @@
 package me.lazytechwork.algods.utils;
 
 public class ArrayList<T> implements List<T> {
-    private transient Object[] data;
-    private int size = 0;
     /**
      * The coefficient of size incrementation when the array is overflown
      */
     public static final double INCREMENTATION_COEFFICIENT = 1.5D;
     public static final int DEFAULT_CAPACITY = 10;
+    private transient Object[] data;
+    private int size = 0;
 
     public ArrayList() {
         this(DEFAULT_CAPACITY);
