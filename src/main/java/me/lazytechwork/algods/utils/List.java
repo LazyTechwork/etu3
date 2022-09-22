@@ -20,7 +20,7 @@ public interface List<T> {
     boolean add(T element);
 
     /**
-     * @param element need to find and remove from the list
+     * @param filter filter to find element ( a -> a.equals(2) )
      * @return is element removed
      */
     boolean remove(Filter element);
@@ -34,7 +34,7 @@ public interface List<T> {
     boolean remove(int index);
 
     /**
-     * Get the element of the list by it's index
+     * Get the element of the list by its index
      *
      * @param index index of element
      * @return element stands on index
@@ -53,18 +53,18 @@ public interface List<T> {
     /**
      * Check is the list contains at least one equals element
      *
-     * @param element element need to find
+     * @param filter filter to find element ( a -> a.equals(2) )
      * @return is the list contains at least one equals element
      */
-    boolean contains(Object element);
+    boolean contains(Filter filter);
 
     /**
      * Get index of the first concurrency of the object in the list
      *
-     * @param element element need to find
+     * @param filter filter to find element ( a -> a.equals(2) )
      * @return index of element
      */
-    int indexOf(Object element);
+    int indexOf(Filter filter);
 
     /**
      * Clears the list

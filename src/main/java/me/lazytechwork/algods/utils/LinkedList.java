@@ -31,7 +31,7 @@ public class LinkedList<T> implements List<T> {
             this.last = newNode;
         }
         ++this.size;
-        return false;
+        return true;
     }
 
     @Override
@@ -84,9 +84,6 @@ public class LinkedList<T> implements List<T> {
         }
         Node<T> current = this.first;
         for (int i = 0; i <= index; i++) {
-            if (current == null)
-                break;
-
             if (i == index)
                 return current.getData();
 
@@ -115,9 +112,6 @@ public class LinkedList<T> implements List<T> {
 
         Node<T> current = this.first;
         for (int i = 0; i < index - 1; i++) {
-            if (current == null)
-                break;
-
             current = current.getNext();
         }
 
@@ -125,25 +119,26 @@ public class LinkedList<T> implements List<T> {
     }
 
     @Override
-    public boolean contains(@Nullable Object element) {
-        return this.indexOf(element) != -1;
+    public boolean contains(Filter filter) {
+        return this.indexOf(filter) != -1;
     }
 
     @Override
-    public int indexOf(@Nullable Object element) {
+    public int indexOf(Filter filter) {
         Node<T> current = this.first;
         int index = 0;
-        while (current != null && !current.getData().equals(element)) {
+        while (current != null && !filter.prove(current.getData())) {
             current = current.getNext();
             ++index;
         }
 
-        return current != null && current.getData().equals(element) ? index : -1;
+        return current != null && filter.prove(current.getData()) ? index : -1;
     }
 
     @Override
     public void clear() {
         this.first = this.last = null;
+        this.size = 0;
     }
 
     @Override
@@ -151,16 +146,18 @@ public class LinkedList<T> implements List<T> {
 
     }
 
-    private void recalculateSize() {
+    public int recalculateSize() {
         Node<T> current = this.first;
-        int result = 0;
+        int result = current == null ? 0 : 1;
 
-        while (current.getNext() != null) {
+        while (current != null && current.getNext() != null) {
             current = current.getNext();
             ++result;
         }
 
         this.size = result;
+
+        return result;
     }
 
     private static class Node<T> {
