@@ -1,7 +1,6 @@
 package me.lazytechwork.algods.utils;
 
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -54,7 +53,6 @@ public class LinkedListTest {
     }
 
     @Test
-    @Disabled
     void isListEmptyAfterRemovingLastElement() {
         assertTrue(list.isEmpty());
 

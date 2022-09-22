@@ -35,22 +35,24 @@ public class LinkedList<T> implements List<T> {
     }
 
     @Override
-    public boolean remove(@Nullable Object element) {
+    public boolean remove(Filter filter) {
         Node<T> current = this.first;
-        while (current != null && current.getNext() != null && !current.getNext().getData().equals(element)) {
+        if (this.size() - 1 == 0) {
+            this.first = this.last = null;
+
+            --this.size;
+            return true;
+        }
+
+        while (current != null && current.getNext() != null && !filter.prove(current.getNext().getData())) {
             current = current.getNext();
         }
-        // TODO Проверка на последний элемент в списке,
-        //  если да, то first = last,
-        //  если удаляем единственный элемент, то first = last = null
-        if (current != null) {
-            if (current.getNext() != null) {
-                if (current.getNext().getData().equals(element)) {
-                    --this.size;
-                    current.setNext(current.getNext().getNext());
-                    return true;
-                }
-            }
+
+        if (current != null && current.getNext() != null && filter.prove(current.getNext().getData())) {
+            current.setNext(current.getNext().getNext());
+
+            --this.size;
+            return true;
         }
 
         return false;
@@ -58,12 +60,20 @@ public class LinkedList<T> implements List<T> {
 
     @Override
     public boolean remove(int index) {
+        if (this.size() - 1 == 0) {
+            this.first = this.last = null;
+            --this.size;
+            return true;
+        }
+
         Node<T> current = getPrevious(index);
 
-        if (current != null && current.getNext() != null)
+        if (current != null && current.getNext() != null) {
             current.setNext(current.getNext().getNext());
+            --this.size;
+            return true;
+        }
 
-        --this.size;
         return false;
     }
 

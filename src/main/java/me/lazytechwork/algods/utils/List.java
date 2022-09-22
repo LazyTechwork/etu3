@@ -23,7 +23,7 @@ public interface List<T> {
      * @param element need to find and remove from the list
      * @return is element removed
      */
-    boolean remove(Object element);
+    boolean remove(Filter element);
 
     /**
      * Remove element by it's index
