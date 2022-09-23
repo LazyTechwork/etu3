@@ -87,7 +87,7 @@ public class ArrayListTest {
         assertEquals(13, list.size());
         assertEquals(67, list.get(6));
 
-        assertTrue(list.remove(it -> it.equals(67)));
+        assertTrue(list.remove(Integer.valueOf(67)));
 
         assertEquals(12, list.size());
         assertEquals(0, list.get(6));
@@ -96,7 +96,7 @@ public class ArrayListTest {
 
         assertEquals(0, list.size());
         list.add(11);
-        assertTrue(list.remove(it -> it.equals(11)));
+        assertTrue(list.remove(Integer.valueOf(11)));
         assertEquals(0, list.size());
     }
 
@@ -105,10 +105,10 @@ public class ArrayListTest {
         for (int i = 0; i <= 25; i++)
             list.add(i);
 
-        assertEquals(21, list.indexOf(it -> it.equals(21)));
-        assertEquals(9, list.indexOf(it -> it.equals(9)));
+        assertEquals(21, list.indexOf(21));
+        assertEquals(9, list.indexOf(9));
 
-        assertEquals(-1, list.indexOf(it -> it.equals(100)));
+        assertEquals(-1, list.indexOf(100));
     }
 
     @Test
@@ -116,8 +116,8 @@ public class ArrayListTest {
         for (int i = 0; i <= 25; i++)
             list.add(i);
 
-        assertTrue(list.contains(it -> it.equals(24)));
-        assertFalse(list.contains(it -> it.equals(27)));
+        assertTrue(list.contains(24));
+        assertFalse(list.contains(27));
     }
 
     @Test

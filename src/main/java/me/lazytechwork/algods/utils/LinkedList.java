@@ -2,6 +2,8 @@ package me.lazytechwork.algods.utils;
 
 import org.jetbrains.annotations.Nullable;
 
+import java.util.function.Predicate;
+
 public class LinkedList<T> implements List<T> {
     private int size;
     private Node<T> first;
@@ -35,7 +37,7 @@ public class LinkedList<T> implements List<T> {
     }
 
     @Override
-    public boolean remove(Filter filter) {
+    public boolean removeIf(Predicate<T> predicate) {
         Node<T> current = this.first;
         if (this.size() - 1 == 0) {
             this.first = this.last = null;
@@ -44,11 +46,11 @@ public class LinkedList<T> implements List<T> {
             return true;
         }
 
-        while (current != null && current.getNext() != null && !filter.prove(current.getNext().getData())) {
+        while (current != null && current.getNext() != null && !predicate.test(current.getNext().getData())) {
             current = current.getNext();
         }
 
-        if (current != null && current.getNext() != null && filter.prove(current.getNext().getData())) {
+        if (current != null && current.getNext() != null && predicate.test(current.getNext().getData())) {
             current.setNext(current.getNext().getNext());
 
             --this.size;
@@ -56,6 +58,11 @@ public class LinkedList<T> implements List<T> {
         }
 
         return false;
+    }
+
+    @Override
+    public boolean remove(Object o) {
+        return removeIf(it -> it.equals(o));
     }
 
     @Override
@@ -119,26 +126,32 @@ public class LinkedList<T> implements List<T> {
     }
 
     @Override
-    public boolean contains(Filter filter) {
-        return this.indexOf(filter) != -1;
+    public boolean contains(Object o) {
+        return indexOf(it -> it.equals(o)) != -1;
     }
 
     @Override
-    public int indexOf(Filter filter) {
+    public int indexOf(Predicate<T> predicate) {
         Node<T> current = this.first;
         int index = 0;
-        while (current != null && !filter.prove(current.getData())) {
+        while (current != null && !predicate.test(current.getData())) {
             current = current.getNext();
             ++index;
         }
 
-        return current != null && filter.prove(current.getData()) ? index : -1;
+        return current != null && predicate.test(current.getData()) ? index : -1;
+    }
+
+    @Override
+    public int indexOf(Object o) {
+        return indexOf(it -> it.equals(o));
     }
 
     @Override
     public void clear() {
         this.first = this.last = null;
         this.size = 0;
+        System.gc();
     }
 
     public int recalculateSize() {

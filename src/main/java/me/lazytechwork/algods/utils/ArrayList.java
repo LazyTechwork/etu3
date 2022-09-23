@@ -1,5 +1,7 @@
 package me.lazytechwork.algods.utils;
 
+import java.util.function.Predicate;
+
 public class ArrayList<T> implements List<T> {
     /**
      * The coefficient of size incrementation when the array is overflown
@@ -54,8 +56,8 @@ public class ArrayList<T> implements List<T> {
     }
 
     @Override
-    public boolean remove(Filter filter) {
-        return this.remove(this.indexOf(filter));
+    public boolean removeIf(Predicate<T> predicate) {
+        return remove(indexOf(predicate));
     }
 
     @Override
@@ -92,17 +94,28 @@ public class ArrayList<T> implements List<T> {
     }
 
     @Override
-    public boolean contains(Filter filter) {
-        return this.indexOf(filter) != -1;
+    public boolean contains(Object o) {
+        return indexOf(it -> it.equals(o)) != -1;
     }
 
     @Override
-    public int indexOf(Filter filter) {
+    public int indexOf(Predicate<T> predicate) {
+        // TODO generic type check
         for (int i = 0; i < this.size; i++)
-            if (filter.prove(this.data[i]))
+            if (predicate.test((T) this.data[i]))
                 return i;
 
         return -1;
+    }
+
+    @Override
+    public boolean remove(Object o) {
+        return remove(indexOf(it -> it.equals(o)));
+    }
+
+    @Override
+    public int indexOf(Object o) {
+        return indexOf(it -> it.equals(o));
     }
 
     @Override
