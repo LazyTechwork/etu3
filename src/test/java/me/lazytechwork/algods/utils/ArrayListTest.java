@@ -17,7 +17,6 @@ public class ArrayListTest {
     @AfterEach
     void tearDown() {
         list = null;
-        System.gc();
     }
 
     @Test

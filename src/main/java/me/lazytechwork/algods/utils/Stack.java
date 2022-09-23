@@ -13,9 +13,9 @@ public class Stack<T> {
      */
     public T push(@Nullable T item) {
         if (this.head == null) {
-            this.head = new Node<>(item);
+            this.head = new Node<>(item, null);
         } else {
-            this.head = new Node<>(item).setPrevious(this.head);
+            this.head = new Node<>(item, this.head);
         }
         return item;
     }
@@ -27,7 +27,7 @@ public class Stack<T> {
      */
     public T pop() {
         T data = this.head.getData();
-        this.head = this.head.getPrevious();
+        this.head = this.head.getNext();
         return data;
     }
 
@@ -50,19 +50,20 @@ public class Stack<T> {
     }
 
     private static class Node<T> {
-        private Node<T> previous;
+        private Node<T> next;
         private final T data;
 
-        public Node(T data) {
+        public Node(T data, Node<T> next) {
             this.data = data;
+            this.next = next;
         }
 
-        public Node<T> getPrevious() {
-            return previous;
+        public Node<T> getNext() {
+            return next;
         }
 
-        public Node<T> setPrevious(@Nullable Node<T> previous) {
-            this.previous = previous;
+        public Node<T> setNext(@Nullable Node<T> next) {
+            this.next = next;
             return this;
         }
 

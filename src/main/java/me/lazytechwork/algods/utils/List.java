@@ -86,7 +86,7 @@ public interface List<T> {
      * @param predicate filter to find element ( it -> it.equals(2) )
      * @return the index of the first occurrence of the specified element in this list, or -1 if this list does not contain the element
      */
-    int indexOf(Predicate<T> predicate);
+    int indexOfFirst(Predicate<T> predicate);
 
     /**
      * Returns the index of the first occurrence of the specified element in this list, or -1 if this list does not contain the element

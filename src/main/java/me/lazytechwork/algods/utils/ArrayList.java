@@ -42,12 +42,14 @@ public class ArrayList<T> implements List<T> {
     public boolean add(T element) {
         if (this.size + 1 > this.data.length) {
             Object[] newArray = new Object[(int) Math.round((this.size + 1) * INCREMENTATION_COEFFICIENT)];
-            System.arraycopy(this.data, 0, newArray, 0, this.data.length);
+
+            for (int i = 0; i < data.length; i++) {
+                newArray[i] = data[i];
+            }
+
             newArray[this.size] = element;
             ++this.size;
             this.data = newArray;
-
-            System.gc();
         } else {
             this.data[this.size] = element;
             ++this.size;
@@ -57,7 +59,7 @@ public class ArrayList<T> implements List<T> {
 
     @Override
     public boolean removeIf(Predicate<T> predicate) {
-        return remove(indexOf(predicate));
+        return remove(indexOfFirst(predicate));
     }
 
     @Override
@@ -77,7 +79,6 @@ public class ArrayList<T> implements List<T> {
             throw new IndexOutOfBoundsException(index);
         }
 
-        // TODO generic type check
         return (T) this.data[index];
     }
 
@@ -86,7 +87,6 @@ public class ArrayList<T> implements List<T> {
         if (index < 0 || index >= size) {
             throw new IndexOutOfBoundsException(index);
         }
-        // TODO generic type check
         T previous = (T) this.data[index];
 
         this.data[index] = element;
@@ -95,11 +95,11 @@ public class ArrayList<T> implements List<T> {
 
     @Override
     public boolean contains(Object o) {
-        return indexOf(it -> it.equals(o)) != -1;
+        return indexOfFirst(it -> it.equals(o)) != -1;
     }
 
     @Override
-    public int indexOf(Predicate<T> predicate) {
+    public int indexOfFirst(Predicate<T> predicate) {
         // TODO generic type check
         for (int i = 0; i < this.size; i++)
             if (predicate.test((T) this.data[i]))
@@ -110,18 +110,20 @@ public class ArrayList<T> implements List<T> {
 
     @Override
     public boolean remove(Object o) {
-        return remove(indexOf(it -> it.equals(o)));
+        return remove(indexOfFirst(it -> it.equals(o)));
     }
 
     @Override
     public int indexOf(Object o) {
-        return indexOf(it -> it.equals(o));
+        return indexOfFirst(it -> it.equals(o));
     }
 
     @Override
     public void clear() {
+        for (int i = 0; i < data.length; i++) {
+            data[i] = null;
+        }
         this.data = new Object[DEFAULT_CAPACITY];
         this.size = 0;
-        System.gc();
     }
 }

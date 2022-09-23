@@ -25,7 +25,7 @@ public class LinkedList<T> implements List<T> {
 
     @Override
     public boolean add(@Nullable T element) {
-        Node<T> newNode = new Node<>(element);
+        Node<T> newNode = new Node<>(element, null);
         if (this.last == null)
             this.first = this.last = newNode;
         else {
@@ -127,11 +127,11 @@ public class LinkedList<T> implements List<T> {
 
     @Override
     public boolean contains(Object o) {
-        return indexOf(it -> it.equals(o)) != -1;
+        return indexOfFirst(it -> it.equals(o)) != -1;
     }
 
     @Override
-    public int indexOf(Predicate<T> predicate) {
+    public int indexOfFirst(Predicate<T> predicate) {
         Node<T> current = this.first;
         int index = 0;
         while (current != null && !predicate.test(current.getData())) {
@@ -144,14 +144,13 @@ public class LinkedList<T> implements List<T> {
 
     @Override
     public int indexOf(Object o) {
-        return indexOf(it -> it.equals(o));
+        return indexOfFirst(it -> it.equals(o));
     }
 
     @Override
     public void clear() {
         this.first = this.last = null;
         this.size = 0;
-        System.gc();
     }
 
     public int recalculateSize() {
@@ -172,8 +171,9 @@ public class LinkedList<T> implements List<T> {
         private Node<T> next;
         private T data;
 
-        public Node(T data) {
+        public Node(@Nullable T data, @Nullable Node<T> next) {
             this.data = data;
+            this.next = next;
         }
 
         public Node<T> getNext() {
