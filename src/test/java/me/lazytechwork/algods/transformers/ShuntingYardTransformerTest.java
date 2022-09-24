@@ -39,4 +39,14 @@ public class ShuntingYardTransformerTest {
     void powExpressions() {
         assertPrefixTransformation("728^9/+", "7 + ( 2 ^ 8 ) / 9");
     }
+
+    @Test
+    void sinExpression() {
+        assertPrefixTransformation("728^sin9/+", "7 + sin ( 2 ^ 8 ) / 9");
+    }
+
+    @Test
+    void cosExpression() {
+        assertPrefixTransformation("728^sin9672^/+cos/+", "7 + sin ( 2 ^ 8 ) / cos ( 9 + 6 / ( 7 ^ 2 ) )");
+    }
 }
