@@ -1,5 +1,7 @@
 plugins {
     id 'java'
+    id 'jacoco'
+    id 'org.barfuin.gradle.jacocolog' version '2.0.0'
 }
 
 group 'me.lazytechwork.algods'
@@ -10,10 +12,28 @@ repositories {
 }
 
 dependencies {
+    compileOnly 'org.jetbrains:annotations:16.0.2'
+
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
 }
 
 test {
     useJUnitPlatform()
+    finalizedBy jacocoTestReport
+}
+
+jacoco {
+    reportsDir = file("$buildDir/jacoco")
+}
+
+jacocoTestReport {
+    dependsOn test
+
+    reports {
+        xml.enabled true
+        xml.destination file("${rootProject.projectDir}/build/reports/jacoco/report.xml")
+        html.enabled false
+        csv.enabled false
+    }
 }
