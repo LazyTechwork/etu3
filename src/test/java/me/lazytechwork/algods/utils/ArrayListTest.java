@@ -140,4 +140,18 @@ public class ArrayListTest {
         list.clear();
         assertEquals(ArrayList.DEFAULT_CAPACITY, list.capacity());
     }
+
+    @Test
+    void removeIfTest() {
+        list.add(-6);
+        list.add(-99);
+        list.add(98);
+        list.add(74);
+        list.add(-1);
+
+        assertEquals(5, list.size());
+        assertEquals(98, list.get(2));
+        list.removeIf(it -> it > 0);
+        assertEquals(74, list.get(2));
+    }
 }

@@ -12,10 +12,10 @@ public class Stack<T> {
      * @return the item argument
      */
     public T push(@Nullable T item) {
-        if (this.head == null) {
-            this.head = new Node<>(item, null);
+        if (head == null) {
+            head = new Node<>(item, null);
         } else {
-            this.head = new Node<>(item, this.head);
+            head = new Node<>(item, head);
         }
         return item;
     }
@@ -26,8 +26,10 @@ public class Stack<T> {
      * @return the object at the top of this stack
      */
     public T pop() {
-        T data = this.head.getData();
-        this.head = this.head.getNext();
+        if (head == null)
+            return null;
+        T data = head.getData();
+        head = head.getNext();
         return data;
     }
 
@@ -37,7 +39,7 @@ public class Stack<T> {
      * @return the object at the top of this stack
      */
     public T peek() {
-        return this.head.getData();
+        return head != null ? head.getData() : null;
     }
 
     /**
@@ -46,7 +48,7 @@ public class Stack<T> {
      * @return true if and only if this stack contains no items; false otherwise
      */
     public boolean isEmpty() {
-        return this.head == null;
+        return head == null;
     }
 
     private static class Node<T> {
@@ -60,11 +62,6 @@ public class Stack<T> {
 
         public Node<T> getNext() {
             return next;
-        }
-
-        public Node<T> setNext(@Nullable Node<T> next) {
-            this.next = next;
-            return this;
         }
 
         public T getData() {

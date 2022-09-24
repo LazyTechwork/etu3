@@ -3,8 +3,7 @@ package me.lazytechwork.algods.utils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class StackTest {
     private Stack<Integer> stack;
@@ -40,5 +39,15 @@ public class StackTest {
         assertEquals(46, stack.pop());
         assertEquals(87, stack.pop());
         assertTrue(stack.isEmpty());
+    }
+
+    @Test
+    void nullOnNullHeadPeek() {
+        assertNull(stack.peek());
+    }
+
+    @Test
+    void nullOnNullHeadPop() {
+        assertNull(stack.pop());
     }
 }
