@@ -29,7 +29,7 @@ public class LinkedList<T> implements List<T> {
         if (this.last == null)
             this.first = this.last = newNode;
         else {
-            this.last.setNext(newNode);
+            this.last.next = newNode;
             this.last = newNode;
         }
         ++this.size;
@@ -46,12 +46,12 @@ public class LinkedList<T> implements List<T> {
             return true;
         }
 
-        while (current != null && current.getNext() != null && !predicate.test(current.getNext().getData())) {
-            current = current.getNext();
+        while (current != null && current.next != null && !predicate.test(current.next.data)) {
+            current = current.next;
         }
 
-        if (current != null && current.getNext() != null && predicate.test(current.getNext().getData())) {
-            current.setNext(current.getNext().getNext());
+        if (current != null && current.next != null && predicate.test(current.next.data)) {
+            current.next = current.next.next;
 
             --this.size;
             return true;
@@ -75,8 +75,8 @@ public class LinkedList<T> implements List<T> {
 
         Node<T> current = getPrevious(index);
 
-        if (current != null && current.getNext() != null) {
-            current.setNext(current.getNext().getNext());
+        if (current != null && current.next != null) {
+            current.next = current.next.next;
             --this.size;
             return true;
         }
@@ -92,9 +92,9 @@ public class LinkedList<T> implements List<T> {
         Node<T> current = this.first;
         for (int i = 0; i <= index; i++) {
             if (i == index)
-                return current.getData();
+                return current.data;
 
-            current = current.getNext();
+            current = current.next;
         }
         return null;
     }
@@ -103,9 +103,9 @@ public class LinkedList<T> implements List<T> {
     public T set(int index, @Nullable T element) {
         Node<T> current = getPrevious(index);
 
-        if (current != null && current.getNext() != null) {
-            T previous = current.getNext().getData();
-            current.getNext().setData(element);
+        if (current != null && current.next != null) {
+            T previous = current.next.data;
+            current.next.data = element;
             return previous;
         }
 
@@ -119,7 +119,7 @@ public class LinkedList<T> implements List<T> {
 
         Node<T> current = this.first;
         for (int i = 0; i < index - 1; i++) {
-            current = current.getNext();
+            current = current.next;
         }
 
         return current;
@@ -134,12 +134,12 @@ public class LinkedList<T> implements List<T> {
     public int indexOfFirst(Predicate<T> predicate) {
         Node<T> current = this.first;
         int index = 0;
-        while (current != null && !predicate.test(current.getData())) {
-            current = current.getNext();
+        while (current != null && !predicate.test(current.data)) {
+            current = current.next;
             ++index;
         }
 
-        return current != null && predicate.test(current.getData()) ? index : -1;
+        return current != null && predicate.test(current.data) ? index : -1;
     }
 
     @Override
@@ -157,8 +157,8 @@ public class LinkedList<T> implements List<T> {
         Node<T> current = this.first;
         int result = current == null ? 0 : 1;
 
-        while (current != null && current.getNext() != null) {
-            current = current.getNext();
+        while (current != null && current.next != null) {
+            current = current.next;
             ++result;
         }
 
@@ -168,30 +168,12 @@ public class LinkedList<T> implements List<T> {
     }
 
     private static class Node<T> {
-        private Node<T> next;
-        private T data;
+        Node<T> next;
+        T data;
 
         public Node(@Nullable T data, @Nullable Node<T> next) {
             this.data = data;
             this.next = next;
-        }
-
-        public Node<T> getNext() {
-            return next;
-        }
-
-        public Node<T> setNext(@Nullable Node<T> next) {
-            this.next = next;
-            return this;
-        }
-
-        public T getData() {
-            return data;
-        }
-
-        public Node<T> setData(@Nullable T data) {
-            this.data = data;
-            return this;
         }
     }
 }

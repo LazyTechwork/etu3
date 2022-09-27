@@ -28,8 +28,8 @@ public class Stack<T> {
     public T pop() {
         if (head == null)
             return null;
-        T data = head.getData();
-        head = head.getNext();
+        T data = head.data;
+        head = head.next;
         return data;
     }
 
@@ -39,7 +39,7 @@ public class Stack<T> {
      * @return the object at the top of this stack
      */
     public T peek() {
-        return head != null ? head.getData() : null;
+        return head != null ? head.data : null;
     }
 
     /**
@@ -52,20 +52,12 @@ public class Stack<T> {
     }
 
     private static class Node<T> {
-        private Node<T> next;
-        private final T data;
+        Node<T> next;
+        final T data;
 
         public Node(T data, Node<T> next) {
             this.data = data;
             this.next = next;
-        }
-
-        public Node<T> getNext() {
-            return next;
-        }
-
-        public T getData() {
-            return data;
         }
     }
 }
