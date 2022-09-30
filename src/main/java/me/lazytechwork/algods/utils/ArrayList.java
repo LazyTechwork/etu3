@@ -68,7 +68,9 @@ public class ArrayList<T> implements List<T> {
             throw new IndexOutOfBoundsException(index);
         }
 
-        System.arraycopy(this.data, index + 1, this.data, index, this.data.length - index - 1);
+        for (int i = index + 1; i < data.length; i++)
+            data[i - 1] = data[i];
+
         --this.size;
         return true;
     }
