@@ -51,3 +51,19 @@ coverage:
       coverage_report:
         coverage_format: cobertura
         path: build/reports/cobertura.xml
+
+benchmark:
+  stage: visualize
+  needs: [ "test" ]
+  script: gradle benchmark
+  when: manual
+  cache:
+    key: "$CI_COMMIT_REF_NAME"
+    policy: pull
+    paths:
+      - build
+      - .gradle
+  artifacts:
+    when: always
+    paths:
+      - build/reports/*Benchmark.svg
