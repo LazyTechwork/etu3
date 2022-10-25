@@ -36,4 +36,13 @@ jacocoTestReport {
         html.enabled false
         csv.enabled false
     }
+
+    afterEvaluate {
+        classDirectories.from = files(classDirectories.files.collect {
+            fileTree(
+                    dir: it,
+                    exclude: ['me/lazytechwork/core/**']
+            )
+        })
+    }
 }
