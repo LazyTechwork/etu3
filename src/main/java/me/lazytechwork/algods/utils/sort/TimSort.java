@@ -15,9 +15,11 @@ public class TimSort<T> {
 
     @Contract(pure = true)
     public @Nullable List<?> sort(@NotNull ArrayList<T> array) {
+        // TODO InsertionSort и MergeSort реализовать отдельными классами
         return null;
     }
 
+    // TODO есть штука @Contract("mutable = param1"), надо понять как изменять оригинальный аргумент, а не его копию
     private @Nullable Run nextRun(@NotNull ArrayList<T> array, int currentIndex, int minRun, Comparator<T> comparator) {
         int diff = array.size() - currentIndex;
 
