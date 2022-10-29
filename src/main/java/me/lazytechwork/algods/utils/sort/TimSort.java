@@ -36,7 +36,17 @@ public class TimSort<T> {
 
         boolean invert = comparator.compare(el1, el2) < 0;
 
-        if (invert)
+        if (invert) {
+            for (
+                    T prev = el2;
+                    currentIndex < array.size()
+                            && comparator.compare(prev, array.get(currentIndex)) >= 0;
+                    prev = array.get(currentIndex++), size++
+            )
+                ;
+            // TODO Реверс run
+            //      Возможно стоит разворот массива сделать вне функции поиска
+        } else
             for (
                     T prev = el2;
                     currentIndex < array.size()
@@ -53,7 +63,6 @@ public class TimSort<T> {
                 size++;
             size--;
         }
-        currentIndex = startIndex + size;
 
         return new Run(startIndex, size);
         // InsertionSort(array, startIndex, startIndex + size - 1, comparator);
