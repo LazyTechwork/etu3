@@ -1,8 +1,5 @@
 package me.lazytechwork.algods.utils;
 
-import org.jetbrains.annotations.NotNull;
-
-import java.util.Iterator;
 import java.util.function.Predicate;
 
 public class ArrayList<T> implements List<T> {
@@ -46,9 +43,7 @@ public class ArrayList<T> implements List<T> {
         if (this.size + 1 > this.data.length) {
             Object[] newArray = new Object[(int) Math.round((this.size + 1) * INCREMENTATION_COEFFICIENT)];
 
-            for (int i = 0; i < data.length; i++) {
-                newArray[i] = data[i];
-            }
+            System.arraycopy(data, 0, newArray, 0, data.length);
 
             newArray[this.size] = element;
             ++this.size;
@@ -130,11 +125,5 @@ public class ArrayList<T> implements List<T> {
         }
         this.data = new Object[DEFAULT_CAPACITY];
         this.size = 0;
-    }
-
-    @NotNull
-    @Override
-    public Iterator<T> iterator() {
-        return null;
     }
 }

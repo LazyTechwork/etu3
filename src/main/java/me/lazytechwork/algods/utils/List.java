@@ -2,7 +2,7 @@ package me.lazytechwork.algods.utils;
 
 import java.util.function.Predicate;
 
-public interface List<T> extends Iterable<T> {
+public interface List<T> {
     /**
      * Returns the number of elements in this list
      *
