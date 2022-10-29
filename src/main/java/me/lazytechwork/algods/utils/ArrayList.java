@@ -1,5 +1,8 @@
 package me.lazytechwork.algods.utils;
 
+import org.jetbrains.annotations.NotNull;
+
+import java.util.Iterator;
 import java.util.function.Predicate;
 
 public class ArrayList<T> implements List<T> {
@@ -127,5 +130,11 @@ public class ArrayList<T> implements List<T> {
         }
         this.data = new Object[DEFAULT_CAPACITY];
         this.size = 0;
+    }
+
+    @NotNull
+    @Override
+    public Iterator<T> iterator() {
+        return null;
     }
 }

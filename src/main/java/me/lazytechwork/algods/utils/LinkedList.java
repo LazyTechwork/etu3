@@ -1,10 +1,12 @@
 package me.lazytechwork.algods.utils;
 
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Iterator;
 import java.util.function.Predicate;
 
-public class LinkedList<T> implements List<T> {
+public class LinkedList<T extends Comparable<T>> implements List<T> {
     private int size;
     private Node<T> first;
     private Node<T> last;
@@ -165,6 +167,31 @@ public class LinkedList<T> implements List<T> {
         this.size = result;
 
         return result;
+    }
+
+    @NotNull
+    @Override
+    public Iterator<T> iterator() {
+        return new LinkedListIterator<T>(first);
+    }
+
+    public static class LinkedListIterator<T> implements Iterator<T> {
+        private Node<T> current;
+
+        public LinkedListIterator(Node<T> current) {
+            this.current = current;
+        }
+
+        @Override
+        public boolean hasNext() {
+            return current.next != null;
+        }
+
+        @Override
+        public T next() {
+            current = current.next;
+            return current.data;
+        }
     }
 
     private static class Node<T> {
