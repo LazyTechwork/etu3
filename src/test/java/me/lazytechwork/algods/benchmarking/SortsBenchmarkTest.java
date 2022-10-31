@@ -1,5 +1,7 @@
 package me.lazytechwork.algods.benchmarking;
 
+import me.lazytechwork.algods.utils.ArrayList;
+import me.lazytechwork.algods.utils.sort.InsertionSort;
 import me.lazytechwork.core.testing.Benchmark;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -11,19 +13,28 @@ import org.knowm.xchart.style.Styler;
 import org.knowm.xchart.style.markers.SeriesMarkers;
 
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
+
+import static me.lazytechwork.algods.utils.sorts.SortTestHelper.assertArrayListSorted;
 
 public class SortsBenchmarkTest {
     private static Benchmark benchmark;
     private static final List<Integer> counts = List.of(10, 15, 25, 50, 100, 125, 150, 200, 500, 750, 1500, 2500, 4350, 5000, 7565, 10000);
     private static final Random random = new Random();
+    private static final int[] UNSORTED_LIST = new int[counts.get(counts.size() - 1)];
+
+    private static final InsertionSort<Integer> INSERTION_SORT = new InsertionSort<>();
+
+    private void fillArrayList(ArrayList<Integer> array, int count) {
+        for (int i = 0; i < count; i++)
+            array.add(UNSORTED_LIST[i]);
+    }
 
     @BeforeAll
     static void beforeAll() {
         benchmark = new Benchmark();
+        for (int i = 0, l = counts.get(counts.size() - 1); i < l; i++)
+            UNSORTED_LIST[i] = random.nextInt(0, 100000);
     }
 
     @Test
@@ -39,10 +50,16 @@ public class SortsBenchmarkTest {
     @Test
     void benchmarkInsertionSort() {
         counts.forEach((count) -> {
+            ArrayList<Integer> array = new ArrayList<>(count);
+            fillArrayList(array, count);
+            int[] sorted = Arrays.stream(UNSORTED_LIST).limit(count).sorted().toArray();
+
             String benchmarkName = "InsertionSort %d".formatted(count);
             benchmark.startBenchmark(benchmarkName);
-            // TODO sort
+            INSERTION_SORT.sort(array, Comparator.comparingInt(a -> a));
             benchmark.stopBenchmark(benchmarkName);
+
+            assertArrayListSorted(array, sorted, "%s - failed".formatted(benchmarkName));
         });
     }
 
@@ -83,7 +100,7 @@ public class SortsBenchmarkTest {
         XYChart chart = new XYChart(500, 400, Styler.ChartTheme.Matlab);
         chart.setTitle("Sorts benchmarking");
         chart.setXAxisTitle("Elements sorted");
-        chart.setYAxisTitle("Time");
+        chart.setYAxisTitle("Time (ms)");
 
         HashMap<String, Long[]> seriesData = new HashMap<>();
 
