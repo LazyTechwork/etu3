@@ -19,7 +19,18 @@ public class TimSort<T> {
         return null;
     }
 
-    // TODO есть штука @Contract("mutable = param1"), надо понять как изменять оригинальный аргумент, а не его копию
+
+    @Contract(mutates = "param1")
+    private void reverseArrayList(@NotNull ArrayList<T> array, int fromIndex, int toIndex) {
+        int n = (toIndex - fromIndex) / 2;
+        for (int i = 0; i <= n; ++i) {
+            T temp = array.get(toIndex - i);
+            array.set(toIndex - i, array.get(toIndex + i));
+            array.set(toIndex + i, temp);
+        }
+    }
+
+    @Contract(mutates = "param1")
     private @Nullable Run nextRun(@NotNull ArrayList<T> array, int currentIndex, int minRun, Comparator<T> comparator) {
         int diff = array.size() - currentIndex;
 
@@ -46,8 +57,7 @@ public class TimSort<T> {
                     prev = array.get(currentIndex++), size++
             )
                 ;
-            // TODO Реверс run
-            //      Возможно стоит разворот массива сделать вне функции поиска
+            reverseArrayList(array, startIndex, currentIndex - 1);
         } else
             for (
                     T prev = el2;
