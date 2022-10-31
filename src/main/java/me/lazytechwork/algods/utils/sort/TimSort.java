@@ -2,7 +2,6 @@ package me.lazytechwork.algods.utils.sort;
 
 
 import me.lazytechwork.algods.utils.ArrayList;
-import me.lazytechwork.algods.utils.List;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -12,13 +11,12 @@ import java.util.Comparator;
 public class TimSort<T> {
     private static final int MIN_MERGE = 64;
     private static final int GALLOP_SIZE = 7;
+    private final InsertionSort<T> INSERTION_SORT_INSTANCE = new InsertionSort<>();
 
-    @Contract(pure = true)
-    public @Nullable List<?> sort(@NotNull ArrayList<T> array) {
-        // TODO InsertionSort и MergeSort реализовать отдельными классами
-        return null;
+    @Contract(mutates = "param1")
+    public void sort(@NotNull ArrayList<T> array, Comparator<T> comparator) {
+
     }
-
 
     @Contract(mutates = "param1")
     private void reverseArrayList(@NotNull ArrayList<T> array, int fromIndex, int toIndex) {
@@ -76,8 +74,8 @@ public class TimSort<T> {
             size--;
         }
 
+        INSERTION_SORT_INSTANCE.sort(array, startIndex, startIndex + size - 1, comparator);
         return new Run(startIndex, size);
-        // InsertionSort(array, startIndex, startIndex + size - 1, comparator);
     }
 
     private static class Run {
