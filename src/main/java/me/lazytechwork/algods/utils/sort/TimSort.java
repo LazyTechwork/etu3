@@ -10,7 +10,6 @@ import java.util.Comparator;
 
 public class TimSort<T> {
     private static final int MIN_MERGE = 64;
-    private static final int GALLOP_SIZE = 7;
     private final InsertionSort<T> INSERTION_SORT_INSTANCE = new InsertionSort<>();
 
     @Contract(mutates = "param1")
