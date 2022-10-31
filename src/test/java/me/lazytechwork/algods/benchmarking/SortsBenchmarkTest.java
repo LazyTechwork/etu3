@@ -19,7 +19,7 @@ import static me.lazytechwork.algods.utils.sorts.SortTestHelper.assertArrayListS
 
 public class SortsBenchmarkTest {
     private static Benchmark benchmark;
-    private static final List<Integer> counts = List.of(10, 15, 25, 50, 100, 125, 150, 200, 500, 750, 1500, 2500, 4350, 5000, 7565, 10000);
+    private static final List<Integer> counts = List.of(750, 1500, 2500, 4350, 5000, 7565, 10000);
     private static final Random random = new Random();
     private static final int[] UNSORTED_LIST = new int[counts.get(counts.size() - 1)];
 
