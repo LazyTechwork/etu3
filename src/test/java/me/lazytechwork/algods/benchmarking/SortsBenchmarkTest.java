@@ -72,16 +72,6 @@ public class SortsBenchmarkTest {
     }
 
     @Test
-    void benchmarkMergeSort() {
-        counts.forEach((count) -> {
-            String benchmarkName = "MergeSort %d".formatted(count);
-            benchmark.startBenchmark(benchmarkName);
-            // TODO sort
-            benchmark.stopBenchmark(benchmarkName);
-        });
-    }
-
-    @Test
     void benchmarkBubbleSort() {
         counts.forEach((count) -> {
             String benchmarkName = "BubbleSort %d".formatted(count);
