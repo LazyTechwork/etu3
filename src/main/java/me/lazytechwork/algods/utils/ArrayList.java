@@ -43,9 +43,7 @@ public class ArrayList<T> implements List<T> {
         if (this.size + 1 > this.data.length) {
             Object[] newArray = new Object[(int) Math.round((this.size + 1) * INCREMENTATION_COEFFICIENT)];
 
-            for (int i = 0; i < data.length; i++) {
-                newArray[i] = data[i];
-            }
+            System.arraycopy(data, 0, newArray, 0, data.length);
 
             newArray[this.size] = element;
             ++this.size;

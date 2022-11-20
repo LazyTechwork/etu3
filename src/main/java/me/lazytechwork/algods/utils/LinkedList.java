@@ -4,7 +4,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.function.Predicate;
 
-public class LinkedList<T> implements List<T> {
+public class LinkedList<T extends Comparable<T>> implements List<T> {
     private int size;
     private Node<T> first;
     private Node<T> last;

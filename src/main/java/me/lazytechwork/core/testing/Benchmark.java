@@ -1,14 +1,13 @@
 package me.lazytechwork.core.testing;
 
-import javax.naming.NameNotFoundException;
 import java.util.HashMap;
 
 /**
  * Easy to use tests benchmarking solution
  */
 public class Benchmark {
-    private HashMap<String, Long> measuringBenchmarkPoints;
-    private HashMap<String, Long> benchmarkResults;
+    private final HashMap<String, Long> measuringBenchmarkPoints = new HashMap<>();
+    private final HashMap<String, Long> benchmarkResults = new HashMap<>();
 
     /**
      * Start benchmark with specified name
@@ -25,11 +24,12 @@ public class Benchmark {
      * @param name name of benchmark
      * @return benchmark result
      */
-    public Long stopBenchmark(String name) throws NameNotFoundException {
+    public Long stopBenchmark(String name) {
         if (measuringBenchmarkPoints.containsKey(name)) {
             benchmarkResults.put(name, System.currentTimeMillis() - measuringBenchmarkPoints.get(name));
             return benchmarkResults.get(name);
-        } else throw new NameNotFoundException("Benchmark with specified name is not started yet");
+        }
+        return 0L;
     }
 
     /**
