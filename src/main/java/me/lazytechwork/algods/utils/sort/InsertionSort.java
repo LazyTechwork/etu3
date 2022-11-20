@@ -15,7 +15,7 @@ public class InsertionSort<T> {
 
     @Contract(mutates = "param1")
     public void sort(@NotNull ArrayList<T> array, int fromIndex, int toIndex, Comparator<T> comparator) {
-        var n = toIndex - fromIndex + 1;
+        int n = toIndex - fromIndex + 1;
         for (var i = 1; i < n; ++i) {
             T key = array.get(fromIndex + i);
             int j = i - 1;

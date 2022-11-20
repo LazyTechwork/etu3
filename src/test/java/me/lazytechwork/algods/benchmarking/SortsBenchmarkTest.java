@@ -2,6 +2,7 @@ package me.lazytechwork.algods.benchmarking;
 
 import me.lazytechwork.algods.utils.ArrayList;
 import me.lazytechwork.algods.utils.sort.InsertionSort;
+import me.lazytechwork.algods.utils.sort.TimSort;
 import me.lazytechwork.core.testing.Benchmark;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -24,6 +25,7 @@ public class SortsBenchmarkTest {
     private static final int[] UNSORTED_LIST = new int[counts.get(counts.size() - 1)];
 
     private static final InsertionSort<Integer> INSERTION_SORT = new InsertionSort<>();
+    private static final TimSort<Integer> TIM_SORT = new TimSort<>();
 
     private void fillArrayList(ArrayList<Integer> array, int count) {
         for (int i = 0; i < count; i++)
@@ -40,10 +42,16 @@ public class SortsBenchmarkTest {
     @Test
     void benchmarkTimSort() {
         counts.forEach((count) -> {
+            ArrayList<Integer> array = new ArrayList<>(count);
+            fillArrayList(array, count);
+            int[] sorted = Arrays.stream(UNSORTED_LIST).limit(count).sorted().toArray();
+
             String benchmarkName = "TimSort %d".formatted(count);
             benchmark.startBenchmark(benchmarkName);
-            // TODO sort
+            TIM_SORT.sort(array, Comparator.comparingInt(a -> a));
             benchmark.stopBenchmark(benchmarkName);
+
+            assertArrayListSorted(array, sorted, "%s - failed".formatted(benchmarkName));
         });
     }
 

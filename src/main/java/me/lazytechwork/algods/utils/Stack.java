@@ -4,6 +4,7 @@ import org.jetbrains.annotations.Nullable;
 
 public class Stack<T> {
     private Node<T> head;
+    private int count = 0;
 
     /**
      * Pushes an item onto the top of this stack
@@ -17,6 +18,7 @@ public class Stack<T> {
         } else {
             head = new Node<>(item, head);
         }
+        ++count;
         return item;
     }
 
@@ -30,6 +32,7 @@ public class Stack<T> {
             return null;
         T data = head.data;
         head = head.next;
+        --count;
         return data;
     }
 
@@ -59,5 +62,9 @@ public class Stack<T> {
             this.data = data;
             this.next = next;
         }
+    }
+
+    public int getCount() {
+        return count;
     }
 }
