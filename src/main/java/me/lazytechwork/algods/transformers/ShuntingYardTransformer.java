@@ -4,7 +4,8 @@ import me.lazytechwork.algods.utils.Stack;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;
-import java.util.regex.Pattern;
+
+import static me.lazytechwork.core.Commons.ONLY_DIGITS;
 
 public class ShuntingYardTransformer {
     public static final Map<String, Integer> OPERATOR_PRIORITIES = Map.of(
@@ -14,8 +15,6 @@ public class ShuntingYardTransformer {
             "+", 0,
             "-", 0
     );
-
-    public static final Pattern ONLY_DIGITS = Pattern.compile("\\d+");
 
     public static @NotNull String infixToPostfixNotation(@NotNull String input) {
         String[] tokens = input.split(" ");
