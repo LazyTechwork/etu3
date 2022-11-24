@@ -88,11 +88,12 @@ public class BinaryTree<T extends Comparable<T>> {
 
         int openingParentheses = sequence.indexOf('(');
         if (openingParentheses == -1) {
-            node.setData(parseInt(sequence));
+            node.setData(sequence.isEmpty() ? null : parseInt(sequence));
             return node;
         }
 
-        node.setData(parseInt(sequence.substring(0, openingParentheses)));
+        String strData = sequence.substring(0, openingParentheses);
+        node.setData(strData.isEmpty() ? null : parseInt(strData));
 
         Integer closingParentheses = findClosingParentheses(sequence, openingParentheses);
         if (closingParentheses == null)
@@ -121,4 +122,22 @@ public class BinaryTree<T extends Comparable<T>> {
         return null;
     }
 
+    public String toString() {
+        return toString(root);
+    }
+
+    private String toString(TreeNode<T> node) {
+        StringBuilder stringBuilder = new StringBuilder("(");
+        if (node.getData() != null)
+            stringBuilder.append(node.getData().toString());
+
+        if (node.getLeftChild() != null)
+            stringBuilder.append(toString(node.getLeftChild()));
+
+        if (node.getRightChild() != null)
+            stringBuilder.append(toString(node.getRightChild()));
+
+        stringBuilder.append(')');
+        return stringBuilder.toString();
+    }
 }
