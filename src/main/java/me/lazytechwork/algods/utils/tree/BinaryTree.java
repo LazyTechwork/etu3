@@ -7,7 +7,7 @@ import org.jetbrains.annotations.Nullable;
 
 import static java.lang.Integer.parseInt;
 
-public class BinaryTree<T extends Comparable<T>> {
+public class BinaryTree<T extends Comparable<T>> implements IBinaryTree<T> {
     private TreeNode<T> root;
 
     public TreeNode<T> getRoot() {

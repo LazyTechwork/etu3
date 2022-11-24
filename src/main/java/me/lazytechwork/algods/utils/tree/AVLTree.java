@@ -3,7 +3,8 @@ package me.lazytechwork.algods.utils.tree;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class AVLTree<T> {
+public class AVLTree<T extends Comparable<T>> implements IBinaryTree<T> {
+    private AVLTreeNode<T> root;
 
     private AVLTreeNode<T> rotateRight(AVLTreeNode<T> node) {
         AVLTreeNode<T> left = node.leftChild;
@@ -40,15 +41,32 @@ public class AVLTree<T> {
             return node;
     }
 
+    public void insert(T data) {
+        root = insert(data, root);
+    }
+
+    private AVLTreeNode<T> insert(T data, AVLTreeNode<T> root) {
+        if (root == null)
+            return new AVLTreeNode<>(data);
+        else if (data.compareTo(root.data) < 0)
+            root.leftChild = insert(data, root.leftChild);
+        else
+            root.rightChild = insert(data, root.rightChild);
+        return balance(root);
+    }
+
+    public AVLTreeNode<T> getRoot() {
+        return root;
+    }
+
     private static class AVLTreeNode<T> {
-        int key;
+        T data;
         short height;
         AVLTreeNode<T> leftChild;
         AVLTreeNode<T> rightChild;
 
-        public AVLTreeNode(int key) {
-            this.key = key;
-            height = 1;
+        public AVLTreeNode(T data) {
+            this.data = data;
         }
 
         public void fixHeight() {
