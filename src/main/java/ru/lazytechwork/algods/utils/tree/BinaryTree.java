@@ -74,6 +74,14 @@ public class BinaryTree<T extends Comparable<T>> implements IBinaryTree<T> {
         return array;
     }
 
+    public static AVLTree<Integer> toAVL(BinaryTree<Integer> tree) {
+        AVLTree<Integer> avl = new AVLTree<>();
+        ArrayList<Integer> nodes = tree.prefixTraverse();
+        for (int i = 0, l = nodes.size(); i < l; i++)
+            avl.insert(nodes.get(i));
+        return avl;
+    }
+
     public static BinaryTree<Integer> fromString(String sequence) throws InvalidTreeSequence, NumberFormatException {
         BinaryTree<Integer> bt = new BinaryTree<>();
         sequence = sequence.replace(" ", "");
