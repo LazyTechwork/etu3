@@ -4,7 +4,7 @@ plugins {
     id 'org.barfuin.gradle.jacocolog' version '2.0.0'
 }
 
-group 'me.lazytechwork.algods'
+group 'ru.lazytechwork.algods'
 version '1.0-SNAPSHOT'
 
 repositories {
@@ -23,7 +23,7 @@ test {
     useJUnitPlatform()
 
     filter {
-        excludeTestsMatching "me.lazytechwork.algods.benchmarking.*"
+        excludeTestsMatching "ru.lazytechwork.algods.benchmarking.*"
     }
 
     finalizedBy jacocoTestReport
@@ -32,7 +32,7 @@ test {
 task benchmark(type: Test) {
     useJUnitPlatform()
     filter {
-        includeTestsMatching "me.lazytechwork.algods.benchmarking.*"
+        includeTestsMatching "ru.lazytechwork.algods.benchmarking.*"
     }
 }
 
@@ -54,7 +54,7 @@ jacocoTestReport {
         classDirectories.from = files(classDirectories.files.collect {
             fileTree(
                     dir: it,
-                    exclude: ['me/lazytechwork/core/**']
+                    exclude: ['ru/lazytechwork/core/**']
             )
         })
     }
