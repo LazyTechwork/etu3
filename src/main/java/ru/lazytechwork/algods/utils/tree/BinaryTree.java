@@ -5,6 +5,10 @@ import org.jetbrains.annotations.Nullable;
 import ru.lazytechwork.algods.utils.ArrayList;
 import ru.lazytechwork.core.exceptions.InvalidTreeSequence;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+
 import static java.lang.Integer.parseInt;
 
 public class BinaryTree<T extends Comparable<T>> implements IBinaryTree<T> {
@@ -75,6 +79,14 @@ public class BinaryTree<T extends Comparable<T>> implements IBinaryTree<T> {
         sequence = sequence.replace(" ", "");
         bt.root = nodeBuilder(sequence, null);
         return bt;
+    }
+
+    public static BinaryTree<Integer> fromFile(Path filePath) throws IOException, InvalidTreeSequence {
+        return fromString(Files
+                .readString(filePath)
+                .replace('\n', ' ')
+                .replace('\r', ' ')
+        );
     }
 
     private static TreeNode<Integer> nodeBuilder(@NotNull String sequence, @Nullable TreeNode<Integer> parent)
