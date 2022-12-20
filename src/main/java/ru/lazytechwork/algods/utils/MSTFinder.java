@@ -1,6 +1,6 @@
 package ru.lazytechwork.algods.utils;
 
-import org.jetbrains.annotations.NotNull;
+import ru.lazytechwork.algods.utils.sort.InsertionSort;
 import ru.lazytechwork.algods.utils.sort.TimSort;
 
 import java.util.Comparator;
@@ -51,7 +51,7 @@ public class MSTFinder {
     }
 
     public static class MinimalSpanningTree {
-        ArrayList<Edge> edges;
+        ArrayList<Edge> edges = new ArrayList<>();
 
         public int getWeight() {
             int weight = 0;
@@ -73,11 +73,12 @@ public class MSTFinder {
          * Пытается связать дерево (отсортировать вершины в правильном порядке)
          */
         public void linkEdges() {
-            TIM_SORT.sort(edges, (a, b) -> a.u == b.v ? -1 : a.v == b.u ? 1 : 0);
+            INSERTION_SORT.sort(edges, (a, b) -> a.u == b.v ? -1 : a.v == b.u ? 1 : 0);
         }
     }
 
     private static final TimSort<Edge> TIM_SORT = new TimSort<>();
+    private static final InsertionSort<Edge> INSERTION_SORT = new InsertionSort<>();
 
     /**
      * Находит минимальное остовное дерево по алгоритму Краскала
@@ -89,7 +90,7 @@ public class MSTFinder {
     public static MinimalSpanningTree mstKruskal(ArrayList<Edge> edges) {
         DSF dsf = new DSF(edges.size()); // СНМ
         MinimalSpanningTree mst = new MinimalSpanningTree();
-        TIM_SORT.sort(edges, Edge::compareTo); // Сортируем ребра
+        INSERTION_SORT.sort(edges, Edge::compareTo); // Сортируем ребра
         for (int i = 0; i < edges.size(); i++) { // Перебираем ребра в порядке неубывания
             Edge e = edges.get(i);
             if (dsf.union(e.u, e.v)) // Если ребра принадлежат разным компонентам
@@ -108,7 +109,7 @@ public class MSTFinder {
      */
     public static String kruskalResult(Graph graph, MinimalSpanningTree mst) {
         ArrayList<Edge> edges = mst.getEdges();
-        TIM_SORT.sort(edges, Comparator.comparing(e -> graph.getKey(e.u) + " " + graph.getKey(e.v)));
+        INSERTION_SORT.sort(edges, Comparator.comparing(e -> graph.getKey(e.u) + " " + graph.getKey(e.v)));
         String[] resultList = new String[edges.size() + 1];
         for (int i = 0, l = edges.size(); i < l; i++) {
             Edge e = edges.get(i);

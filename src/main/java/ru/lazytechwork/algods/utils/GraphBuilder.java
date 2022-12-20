@@ -8,13 +8,13 @@ public class GraphBuilder {
         for (int i = 0; i < keys.length; i++)
             graph.addKey(keys[i], i);
 
-        ArrayList<ArrayList<Integer>> graphMatrix = new ArrayList<>();
+        ArrayList<ArrayList<Integer>> graphMatrix = new ArrayList<>(keys.length);
         for (int i = 1; i < lines.length; i++) {
-            ArrayList<Integer> weights = new ArrayList<>();
+            ArrayList<Integer> weights = new ArrayList<>(keys.length);
             String[] lineValues = lines[i].split(" +");
             for (String value : lineValues)
                 weights.add(Integer.parseInt(value));
-            graphMatrix.set(i - 1, weights);
+            graphMatrix.add(weights);
         }
 
         for (int i = 0, il = graphMatrix.size(); i < il; i++) {

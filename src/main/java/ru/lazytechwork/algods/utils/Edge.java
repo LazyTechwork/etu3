@@ -3,7 +3,13 @@ package ru.lazytechwork.algods.utils;
 import org.jetbrains.annotations.NotNull;
 
 public class Edge implements Comparable<Edge> {
+    /**
+     * From vertex
+     */
     int u;
+    /**
+     * To vertex
+     */
     int v;
     int w;
 
