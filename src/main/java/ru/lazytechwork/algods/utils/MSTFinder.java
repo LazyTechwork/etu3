@@ -103,17 +103,16 @@ public class MSTFinder {
      * Преобразование полученного результата в формат,
      * необходимый для курсовой работы
      *
-     * @param graph граф для соотношения пар ключей
      * @param mst   минимальное остовное дерево
      * @return необходимый вывод для курсовой
      */
-    public static String kruskalResult(Graph graph, MinimalSpanningTree mst) {
+    public static String kruskalResult(MinimalSpanningTree mst) {
         ArrayList<Edge> edges = mst.getEdges();
-        INSERTION_SORT.sort(edges, Comparator.comparing(e -> graph.getKey(e.u) + " " + graph.getKey(e.v)));
+        INSERTION_SORT.sort(edges, Comparator.comparing(e -> e.uKey + " " + e.vKey));
         String[] resultList = new String[edges.size() + 1];
         for (int i = 0, l = edges.size(); i < l; i++) {
             Edge e = edges.get(i);
-            resultList[i] = graph.getKey(e.u) + " " + graph.getKey(e.v);
+            resultList[i] = e.uKey + " " + e.vKey;
         }
         resultList[edges.size()] = Integer.toString(mst.getWeight());
         return String.join(System.lineSeparator(), resultList);

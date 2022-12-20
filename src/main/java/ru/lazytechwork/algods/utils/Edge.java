@@ -12,11 +12,21 @@ public class Edge implements Comparable<Edge> {
      */
     int v;
     int w;
+    String uKey;
+    String vKey;
 
     public Edge(int u, int v, int w) {
         this.u = u;
         this.v = v;
         this.w = w;
+    }
+
+    public Edge(int u, int v, int w, String uKey, String vKey) {
+        this.u = u;
+        this.v = v;
+        this.w = w;
+        this.uKey = uKey;
+        this.vKey = vKey;
     }
 
     @Override

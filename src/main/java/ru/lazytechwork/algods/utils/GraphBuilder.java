@@ -5,8 +5,6 @@ public class GraphBuilder {
         Graph graph = new Graph();
         String[] lines = s.replace("\r", "").split("\n");
         String[] keys = lines[0].trim().split(" +");
-        for (int i = 0; i < keys.length; i++)
-            graph.addKey(keys[i], i);
 
         ArrayList<ArrayList<Integer>> graphMatrix = new ArrayList<>(keys.length);
         for (int i = 1; i < lines.length; i++) {
@@ -22,7 +20,7 @@ public class GraphBuilder {
             for (int j = 0, jl = row.size(); j < jl; j++) {
                 Integer weight = row.get(j);
                 if (weight != 0)
-                    graph.addEdge(new Edge(i, j, weight));
+                    graph.addEdge(new Edge(i, j, weight, keys[i], keys[j]));
             }
         }
         return graph;

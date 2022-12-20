@@ -17,6 +17,6 @@ class MSTFinderTest {
         MSTFinder.MinimalSpanningTree mst = MSTFinder.mstKruskal(graph.getEdges());
         assertEquals("A C" + System.lineSeparator() +
                 "B C" + System.lineSeparator() +
-                "3", MSTFinder.kruskalResult(graph, mst));
+                "3", MSTFinder.kruskalResult(mst));
     }
 }
