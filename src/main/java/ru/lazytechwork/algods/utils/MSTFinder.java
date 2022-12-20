@@ -6,21 +6,6 @@ import ru.lazytechwork.algods.utils.sort.TimSort;
 import java.util.Comparator;
 
 public class MSTFinder {
-    public static class Edge implements Comparable<Edge> {
-        int u, v, w;
-
-        public Edge(int u, int v, int w) {
-            this.u = u;
-            this.v = v;
-            this.w = w;
-        }
-
-        @Override
-        public int compareTo(@NotNull Edge edge) {
-            if (w != edge.w) return w < edge.w ? -1 : 1;
-            return 0;
-        }
-    }
 
     /**
      * Класс системы непересекающихся множеств
@@ -101,7 +86,7 @@ public class MSTFinder {
      * @param edges Массив связей
      * @return минимальное остовное дерево
      */
-    MinimalSpanningTree mstKruskal(ArrayList<Edge> edges) {
+    public static MinimalSpanningTree mstKruskal(ArrayList<Edge> edges) {
         DSF dsf = new DSF(edges.size()); // СНМ
         MinimalSpanningTree mst = new MinimalSpanningTree();
         TIM_SORT.sort(edges, Edge::compareTo); // Сортируем ребра
@@ -111,5 +96,25 @@ public class MSTFinder {
                 mst.addEdge(e); // Добавляем ребро в дерево
         }
         return mst;
+    }
+
+    /**
+     * Преобразование полученного результата в формат,
+     * необходимый для курсовой работы
+     *
+     * @param graph граф для соотношения пар ключей
+     * @param mst   минимальное остовное дерево
+     * @return необходимый вывод для курсовой
+     */
+    public static String kruskalResult(Graph graph, MinimalSpanningTree mst) {
+        ArrayList<Edge> edges = mst.getEdges();
+        TIM_SORT.sort(edges, Comparator.comparing(e -> graph.getKey(e.u) + " " + graph.getKey(e.v)));
+        String[] resultList = new String[edges.size() + 1];
+        for (int i = 0, l = edges.size(); i < l; i++) {
+            Edge e = edges.get(i);
+            resultList[i] = graph.getKey(e.u) + " " + graph.getKey(e.v);
+        }
+        resultList[edges.size()] = Integer.toString(mst.getWeight());
+        return String.join(System.lineSeparator(), resultList);
     }
 }
