@@ -122,9 +122,15 @@ public class AVLTree<T extends Comparable<T>> implements IBinaryTree<T> {
     public @Nullable ArrayList<T> prefixTraverse(AVLTreeNode<T> node, ArrayList<T> array) {
         if (node == null)
             return null;
-        array.add(node.getData());
-        prefixTraverse(node.getLeftChild(), array);
-        prefixTraverse(node.getRightChild(), array);
+
+        Stack<AVLTreeNode<T>> treeNodeStack = new Stack<>();
+        treeNodeStack.push(node);
+        while (!treeNodeStack.isEmpty()) {
+            AVLTreeNode<T> n = treeNodeStack.pop();
+            array.add(n.data);
+            if (n.rightChild != null) treeNodeStack.push(n.rightChild);
+            if (n.leftChild != null) treeNodeStack.push(n.leftChild);
+        }
 
         return array;
     }
@@ -136,9 +142,15 @@ public class AVLTree<T extends Comparable<T>> implements IBinaryTree<T> {
     public @Nullable ArrayList<T> infixTraverse(AVLTreeNode<T> node, ArrayList<T> array) {
         if (node == null)
             return null;
-        infixTraverse(node.getLeftChild(), array);
-        array.add(node.getData());
-        infixTraverse(node.getRightChild(), array);
+
+        Stack<AVLTreeNode<T>> treeNodeStack = new Stack<>();
+        treeNodeStack.push(node);
+        while (!treeNodeStack.isEmpty()) {
+            AVLTreeNode<T> n = treeNodeStack.pop();
+            if (n.rightChild != null) treeNodeStack.push(n.rightChild);
+            array.add(n.data);
+            if (n.leftChild != null) treeNodeStack.push(n.leftChild);
+        }
 
         return array;
     }
@@ -150,9 +162,15 @@ public class AVLTree<T extends Comparable<T>> implements IBinaryTree<T> {
     public @Nullable ArrayList<T> postfixTraverse(AVLTreeNode<T> node, ArrayList<T> array) {
         if (node == null)
             return null;
-        postfixTraverse(node.getLeftChild(), array);
-        postfixTraverse(node.getRightChild(), array);
-        array.add(node.getData());
+
+        Stack<AVLTreeNode<T>> treeNodeStack = new Stack<>();
+        treeNodeStack.push(node);
+        while (!treeNodeStack.isEmpty()) {
+            AVLTreeNode<T> n = treeNodeStack.pop();
+            if (n.rightChild != null) treeNodeStack.push(n.rightChild);
+            if (n.leftChild != null) treeNodeStack.push(n.leftChild);
+            array.add(n.data);
+        }
 
         return array;
     }
