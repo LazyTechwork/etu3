@@ -1,7 +1,6 @@
 package ru.lazytechwork.algods.utils;
 
 import ru.lazytechwork.algods.utils.sort.InsertionSort;
-import ru.lazytechwork.algods.utils.sort.TimSort;
 
 import java.util.Comparator;
 
@@ -77,7 +76,6 @@ public class MSTFinder {
         }
     }
 
-    private static final TimSort<Edge> TIM_SORT = new TimSort<>();
     private static final InsertionSort<Edge> INSERTION_SORT = new InsertionSort<>();
 
     /**
