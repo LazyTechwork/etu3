@@ -24,47 +24,46 @@ public class TimSort<T> {
 
         while ((run = nextRun(array, currentIndex, minRun, comparator)) != null) {
             runs.push(run);
-            currentIndex = run.currentIndex;
-        }
+            while (runs.getCount() >= 3) {
+                Run x = runs.pop();
+                Run y = runs.pop();
+                Run z = runs.pop();
 
-        while (runs.getCount() >= 3) {
-            Run x = runs.pop();
-            Run y = runs.pop();
-            Run z = runs.pop();
-
-            if (z.size > x.size + y.size && y.size > x.size) {
-                runs.push(z);
-                runs.push(y);
-                runs.push(x);
-                break;
-            }
-
-            if (z.size >= x.size + y.size) {
-                Run newRun;
-
-                if (z.size > x.size) {
-                    runs.push(x);
-                    newRun = merge(array, z.startIndex, z.size, y.startIndex, y.size, comparator);
-                } else {
+                if (z.size > x.size + y.size && y.size > x.size) {
                     runs.push(z);
-                    newRun = merge(array, x.startIndex, x.size, y.startIndex, y.size, comparator);
+                    runs.push(y);
+                    runs.push(x);
+                    break;
                 }
 
-                runs.push(newRun);
-            } else {
-                Run newRun = merge(array, y.startIndex, y.size, x.startIndex, x.size, comparator);
-                runs.push(newRun);
-                runs.push(z);
+                if (z.size >= x.size + y.size) {
+                    Run newRun;
+
+                    if (z.size > x.size) {
+                        runs.push(x);
+                        newRun = merge(array, z.startIndex, z.size, y.startIndex, y.size, comparator);
+                    } else {
+                        runs.push(z);
+                        newRun = merge(array, x.startIndex, x.size, y.startIndex, y.size, comparator);
+                    }
+
+                    runs.push(newRun);
+                } else {
+                    Run newRun = merge(array, y.startIndex, y.size, x.startIndex, x.size, comparator);
+                    runs.push(newRun);
+                    runs.push(z);
+                }
             }
-        }
 
-        while (runs.getCount() >= 2) {
-            Run x = runs.pop();
-            Run y = runs.pop();
+            while (runs.getCount() >= 2) {
+                Run x = runs.pop();
+                Run y = runs.pop();
 
-            Run newRun = merge(array, x.startIndex, x.size, y.startIndex, y.size, comparator);
+                Run newRun = merge(array, x.startIndex, x.size, y.startIndex, y.size, comparator);
 
-            runs.push(newRun);
+                runs.push(newRun);
+            }
+            currentIndex = run.currentIndex;
         }
     }
 
