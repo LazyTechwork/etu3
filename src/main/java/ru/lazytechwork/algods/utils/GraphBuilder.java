@@ -1,5 +1,9 @@
 package ru.lazytechwork.algods.utils;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+
 public class GraphBuilder {
     public static Graph fromString(String s) {
         Graph graph = new Graph();
@@ -24,5 +28,9 @@ public class GraphBuilder {
             }
         }
         return graph;
+    }
+
+    public static Graph fromFile(Path filePath) throws IOException {
+        return fromString(String.join(System.lineSeparator(), Files.readAllLines(filePath)));
     }
 }
