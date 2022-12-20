@@ -148,9 +148,9 @@ public class TimSort<T> {
                     continue;
                 }
 
-                int[] gallopResult = gallop(array, tempArray, currentArr, current1, array.get(current2), comparator);
-                currentArr = gallopResult[0];
-                current1 = gallopResult[1];
+                GallopReturn gallopResult = gallop(array, tempArray, currentArr, current1, array.get(current2), comparator);
+                currentArr = gallopResult.currentArr;
+                current1 = gallopResult.currentSource;
             } else {
                 if (current1 == size1) {
                     count = 0;
@@ -158,9 +158,9 @@ public class TimSort<T> {
                     continue;
                 }
 
-                int[] gallopResult = gallop(array, array, currentArr, current2, tempArray.get(current1), comparator);
-                currentArr = gallopResult[0];
-                current2 = gallopResult[1];
+                GallopReturn gallopResult = gallop(array, array, currentArr, current2, tempArray.get(current1), comparator);
+                currentArr = gallopResult.currentArr;
+                current2 = gallopResult.currentSource;
             }
             lastFromLeft = !lastFromLeft;
             count = 0;
@@ -170,7 +170,8 @@ public class TimSort<T> {
     }
 
     @Contract(mutates = "param1")
-    private int[] gallop(ArrayList<T> array, ArrayList<T> source, int currentArr, int currentSource, T currentOpposite, Comparator<T> comparator) {
+    private GallopReturn gallop(ArrayList<T> array, ArrayList<T> source, int currentArr, int currentSource,
+                                T currentOpposite, Comparator<T> comparator) {
         int startIndex = currentSource;
 
         int i = 0;
@@ -181,7 +182,7 @@ public class TimSort<T> {
 
         if (i == 0) {
             currentArr--;
-            return new int[]{currentArr, currentSource};
+            return new GallopReturn(currentArr, currentSource);
         }
 
         currentSource -= 1 << i;
@@ -192,7 +193,16 @@ public class TimSort<T> {
         currentArr += currentSource - startIndex;
         currentSource++;
 
-        return new int[]{currentArr, currentSource};
+        return new GallopReturn(currentArr, currentSource);
+    }
+
+    private static class GallopReturn {
+        int currentArr, currentSource;
+
+        public GallopReturn(int currentArr, int currentSource) {
+            this.currentArr = currentArr;
+            this.currentSource = currentSource;
+        }
     }
 
     @Contract(mutates = "param1")
